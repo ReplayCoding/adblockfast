@@ -158,3 +158,14 @@ BROWSER_ACTION.onClicked.addListener(function(tab) {
     TABS.reload(ID);
   }
 });
+var matchers = [];
+for (var i = DOMAINS_LENGTH - 1; i + 1; i--){
+  matchers.push(new chrome.declarativeWebRequest.RequestMatcher({
+    url: { urlMatches: DOMAINS[i], schemes: ['http', 'https'] }
+    }));
+}
+var rule = {
+  conditions: matchers,
+  actions: [
+    new chrome.declarativeWebRequest.CancelRequest()
+  ]};
